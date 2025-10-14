@@ -1,26 +1,187 @@
 @import "tailwindcss";
 
+/* Custom CSS Variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FAFAF8;
+  --foreground: #2C2C2C;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .animate-gpu {
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Focus visible styles for accessibility */
+  .focus-visible:focus-visible {
+    outline: 2px solid #8E806C;
+    outline-offset: 2px;
+  }
+}
+
+/* Ensure images don't cause layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #D13D47;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Custom scrollbar for webkit browsers (optional premium touch) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E8E6E3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4B5A0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A99B86;
+}
+
+
+/* ----------------------------------------
+   Custom Theme Extensions
+   ---------------------------------------- */
+
+/* Colors (based on your design palette) */
+@layer base {
+  :root {
+    --charcoal: #1C1C1C;
+    --gold-400: #C5A572;
+    --gold-500: #B8945D;
+    --gold-600: #A8824A;
+    --gray-light: #fbfbfb;
+    --red-primary: #D13D47;
+    --red-dark: #B32D37;
+  }
+}
+
+/* Custom Color Utilities */
+@layer utilities {
+  .bg-charcoal {
+    background-color: var(--charcoal);
+  }
+
+  .text-charcoal {
+    color: var(--charcoal);
+  }
+
+  .bg-gold-400 {
+    background-color: var(--gold-400);
+  }
+
+  .hover\:bg-gold-500:hover {
+    background-color: var(--gold-500);
+  }
+
+  .border-gold-400 {
+    border-color: var(--gold-400);
+  }
+
+  .text-gray-light {
+    color: var(--gray-light);
+  }
+
+  .from-red-primary {
+    --tw-gradient-from: var(--red-primary);
+    --tw-gradient-to: rgb(209 61 71 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+
+  .to-red-dark {
+    --tw-gradient-to: var(--red-dark);
+  }
+
+  .bg-gradient-red {
+    background-image: linear-gradient(to right, var(--red-primary), var(--red-dark));
+  }
+
+  .focus\:ring-gold-600:focus {
+    --tw-ring-color: var(--gold-600);
+  }
+}
+
+/* Typography Utilities */
+@layer utilities {
+  .font-heading {
+    font-family: 'Montserrat', 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  .font-body {
+    font-family: 'Inter', 'Roboto', sans-serif;
+  }
+
+  .text-display {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+  }
+}
+
+/* Shadows */
+@layer utilities {
+  .shadow-gold {
+    box-shadow: 0 8px 32px rgba(197, 165, 114, 0.5);
+  }
+
+  .shadow-red-400\/40 {
+    box-shadow: 0 8px 24px rgba(209, 61, 71, 0.4);
+  }
+}
+
+/* Button polish hover transitions */
+@layer utilities {
+  .hover\:scale-105:hover {
+    transform: scale(1.05);
+  }
 }

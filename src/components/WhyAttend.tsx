@@ -180,7 +180,7 @@ export default function WhyAttend() {
               <h3 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
                 Key Highlights
               </h3>
-              <p className="text-gray-light/90 text-lg max-w-2xl mx-auto">
+              <p className="text-gray- text-lg max-w-2xl mx-auto">
                 Six transformative experiences designed to elevate your leadership journey
               </p>
             </div>
@@ -201,7 +201,7 @@ export default function WhyAttend() {
                       {highlight.title}
                     </h4>
                   </div>
-                  <p className="text-gray-light/80 text-sm leading-relaxed ml-11">
+                  <p className="text-gray-muted text-sm leading-relaxed ml-11">
                     {highlight.description}
                   </p>
                 </motion.div>

@@ -69,7 +69,7 @@ export default function CongressAgenda() {
   return (
       <section
         id="agenda"
-        className="max-w-[1440px] mx-auto px-10 relative py-24 lg:py-32 overflow-hidden"
+        className="lg:max-w-[1440px] mx-auto px-10 relative py-24 lg:py-32 overflow-hidden"
       >
       <div className="container mx-auto px-6 lg:px-12">
         <motion.div

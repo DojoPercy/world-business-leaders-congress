@@ -123,34 +123,7 @@ export default function WhoAttend() {
           </p>
         </motion.div>
 
-        {/* Stats Bar */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={scaleVariants}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16 lg:mb-20"
-        >
-          {[
-            { number: '300+', label: 'Global Leaders' },
-            { number: '50+', label: 'Countries' },
-            { number: '20+', label: 'Industries' },
-            { number: '5', label: 'Days of Impact' },
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              variants={fadeVariants}
-              className="text-center p-6 bg-gradient-to-br from-gold-50 to-red-50 rounded-2xl border border-gold-200/50"
-            >
-              <div className="text-4xl lg:text-5xl font-heading font-bold text-red-600 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-slate font-medium">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+       
 
         {/* Attendee Profiles Grid */}
         <motion.div
@@ -225,7 +198,7 @@ export default function WhoAttend() {
               <h3 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
                 Are You a Leader Ready to Make an Impact?
               </h3>
-              <p className="text-gray-light text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-gray-muted text-lg mb-8 max-w-2xl mx-auto">
                 Join the global conversation on purpose-driven business and sustainable leadership. 
                 Your seat at the table awaits.
               </p>

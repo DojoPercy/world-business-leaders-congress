@@ -1,6 +1,57 @@
 @import "tailwindcss";
 
-/* Custom CSS Variables */
+@theme {
+  /* Brand Colors - Gold Scale (WCAG AA Compliant) */
+  --color-gold-50: #FAF8F6;
+  --color-gold-100: #F3EFE9;
+  --color-gold-200: #E8E0D6;
+  --color-gold-300: #D4C5B0;
+  --color-gold-400: #C4B5A0;
+  --color-gold-500: #A99B86;
+  --color-gold-600: #8E806C;
+  --color-gold-700: #6B5E4F;
+  --color-gold-800: #4A4139;
+  --color-gold-900: #2D2822;
+  --color-gold: #C4B5A0;
+
+  /* Brand Colors - Red Scale */
+  --color-red-50: #FEF2F3;
+  --color-red-100: #FCE4E6;
+  --color-red-200: #F9C9CD;
+  --color-red-300: #E85D66;
+  --color-red-400: #D13D47;
+  --color-red-500: #B32D37;
+  --color-red-600: #951E27;
+  --color-red-700: #7A1820;
+  --color-red-800: #5E131A;
+  --color-red-900: #3D0C11;
+  --color-red: #D13D47;
+
+  /* Neutral Colors */
+  --color-charcoal: #2C2C2C;
+  --color-slate: #4A4A4A;
+  --color-gray-light: #E8E6E3;
+  --color-gray-muted: #a1a19f;
+  --color-off-white: #FAFAF8;
+
+  /* Typography */
+  --font-family-heading: var(--font-montserrat), system-ui, sans-serif;
+  --font-family-body: var(--font-inter), system-ui, sans-serif;
+
+  /* Fluid Typography Scale */
+  --font-size-display: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+  --font-size-display-sm: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+  --font-size-h1: clamp(2rem, 3vw + 0.5rem, 3rem);
+  --font-size-h2: clamp(1.75rem, 2.5vw + 0.5rem, 2.5rem);
+  --font-size-h3: clamp(1.5rem, 2vw + 0.5rem, 2rem);
+
+  /* Background Images */
+  --background-image-gradient-red: linear-gradient(135deg, #D13D47 0%, #B32D37 100%);
+  --background-image-gradient-gold: linear-gradient(135deg, #A99B86 0%, #8E806C 100%);
+  --background-image-hero-overlay: linear-gradient(180deg, rgba(44,44,44,0.4) 0%, rgba(44,44,44,0.7) 100%);
+}
+
+/* Custom CSS Variables for compatibility */
 :root {
   --background: #FAFAF8;
   --foreground: #2C2C2C;
@@ -89,82 +140,17 @@ body {
 }
 
 
-/* ----------------------------------------
-   Custom Theme Extensions
-   ---------------------------------------- */
-
-/* Colors (based on your design palette) */
-@layer base {
-  :root {
-    --charcoal: #1C1C1C;
-    --gold-400: #C5A572;
-    --gold-500: #B8945D;
-    --gold-600: #A8824A;
-    --gray-light: #fbfbfb;
-    --red-primary: #D13D47;
-    --red-dark: #B32D37;
-  }
-}
-
-/* Custom Color Utilities */
+/* Additional custom utilities that aren't covered by @theme */
 @layer utilities {
-  .bg-charcoal {
-    background-color: var(--charcoal);
+  /* Text balance for better typography */
+  .text-balance {
+    text-wrap: balance;
   }
-
-  .text-charcoal {
-    color: var(--charcoal);
-  }
-
-  .bg-gold-400 {
-    background-color: var(--gold-400);
-  }
-
-  .hover\:bg-gold-500:hover {
-    background-color: var(--gold-500);
-  }
-
-  .border-gold-400 {
-    border-color: var(--gold-400);
-  }
-
-  .text-gray-light {
-    color: var(--gray-light);
-  }
-
-  .from-red-primary {
-    --tw-gradient-from: var(--red-primary);
-    --tw-gradient-to: rgb(209 61 71 / 0);
-    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-  }
-
-  .to-red-dark {
-    --tw-gradient-to: var(--red-dark);
-  }
-
-  .bg-gradient-red {
-    background-image: linear-gradient(to right, var(--red-primary), var(--red-dark));
-  }
-
-  .focus\:ring-gold-600:focus {
-    --tw-ring-color: var(--gold-600);
-  }
-}
-
-/* Typography Utilities */
-@layer utilities {
-  .font-heading {
-    font-family: 'Montserrat', 'Poppins', sans-serif;
-    letter-spacing: -0.02em;
-  }
-
-  .font-body {
-    font-family: 'Inter', 'Roboto', sans-serif;
-  }
-
-  .text-display {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.1;
+  
+  /* Custom focus styles for accessibility */
+  .focus-visible:focus-visible {
+    outline: 2px solid #8E806C;
+    outline-offset: 2px;
   }
 }
 

@@ -39,17 +39,6 @@ export const scaleIn: Variants = {
   },
 }
 
-export const scrollIndicatorVariants = {
-  animate: {
-    y: [0, 8, 0],
-    transition: { 
-      duration: 1.5, 
-      repeat: Infinity, 
-      ease: 'easeInOut' 
-    }
-  }
-}
-
 export const mobileMenuVariants: Variants = {
   closed: { x: '100%', opacity: 0 },
   open: { 

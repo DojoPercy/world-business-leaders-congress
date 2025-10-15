@@ -5,7 +5,7 @@ import { CalendarDays, MapPin, ArrowRight, Calendar, ChevronDown } from 'lucide-
 import Image from 'next/image'
 import Button from './Button'
 import { siteConfig } from '@/config/site'
-import { heroContainerVariants, fadeInUp, scaleIn, scrollIndicatorVariants } from '@/lib/animations'
+import { heroContainerVariants, fadeInUp, scaleIn } from '@/lib/animations'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 export default function Hero() {
@@ -134,8 +134,12 @@ export default function Hero() {
         {/* Scroll Indicator */}
         {!prefersReducedMotion && (
           <motion.div
-            variants={scrollIndicatorVariants}
-            animate="animate"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ 
+              duration: 1.5, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
             className="absolute bottom-10 left-1/2 -translate-x-1/2"
           >
             <ChevronDown className="w-8 h-8 text-white" />

@@ -2,10 +2,6 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
-  safelist: [
-    'bg-gradient-red',
-    'bg-gradient-gold',
-  ],
   theme: {
     extend: {
       fontFamily: {

@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Globe, Lightbulb, Users, Target, Award, Sprout, ArrowRight } from 'lucide-react'
+import { Globe, Lightbulb, Users, Target, Award, Sprout, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useState, useRef } from 'react'
 
 const BENEFITS = [
   {
@@ -92,9 +93,23 @@ const staggerContainer = {
 
 export default function WhyAttend() {
   const prefersReducedMotion = useReducedMotion()
-  
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
+
   const containerVariants = prefersReducedMotion ? { hidden: {}, visible: {} } : staggerContainer
   const fadeVariants = prefersReducedMotion ? { hidden: {}, visible: {} } : fadeInUp
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % BENEFITS.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + BENEFITS.length) % BENEFITS.length)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
 
   return (
     <section id="why-attend" className="relative py-24 lg:py-32 bg-gradient-to-b from-off-white via-white to-gold-50">
@@ -128,39 +143,115 @@ export default function WhyAttend() {
           </p>
         </motion.div>
 
-        {/* Benefits Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
-        >
-          {BENEFITS.map((benefit, index) => (
-            <motion.div
-              key={index}
-              variants={fadeVariants}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-light/50"
-            >
-              {/* Icon */}
-              <div className={`inline-flex p-4 rounded-xl ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                <benefit.icon className="w-6 h-6 text-white" />
+        {/* Benefits - Desktop Grid / Mobile Carousel */}
+        <div className="mb-20">
+          {/* Desktop Grid */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {BENEFITS.map((benefit, index) => (
+              <motion.div
+                key={index}
+                variants={fadeVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+              >
+                {/* Icon */}
+                <div className={`inline-flex p-4 rounded-xl ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <benefit.icon className="w-6 h-6 text-white" />
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-heading font-semibold text-charcoal mb-3 group-hover:text-red-600 transition-colors duration-300">
+                  {benefit.title}
+                </h3>
+                <p className="text-slate leading-relaxed">
+                  {benefit.description}
+                </p>
+
+                {/* Decorative gradient line */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1 ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden relative">
+            <div className="overflow-hidden rounded-2xl">
+              <motion.div
+                ref={carouselRef}
+                className="flex"
+                animate={{ x: `-${currentSlide * 100}%` }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {BENEFITS.map((benefit, index) => (
+                  <div key={index} className="w-full flex-shrink-0 px-2">
+                    <motion.div
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeVariants}
+                      className="group relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+                    >
+                      {/* Icon */}
+                      <div className={`inline-flex p-4 rounded-xl ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <benefit.icon className="w-6 h-6 text-white" />
+                      </div>
+
+                      {/* Content */}
+                      <h3 className="text-lg font-heading font-semibold text-charcoal mb-3 group-hover:text-red-600 transition-colors duration-300">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-slate text-sm leading-relaxed">
+                        {benefit.description}
+                      </p>
+
+                      {/* Decorative gradient line */}
+                      <div className={`absolute bottom-0 left-0 right-0 h-1 ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                    </motion.div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="flex items-center justify-between mt-6">
+              <button
+                onClick={prevSlide}
+                className="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+                aria-label="Previous benefit"
+              >
+                <ChevronLeft className="w-5 h-5 text-charcoal" />
+              </button>
+
+              {/* Dots Indicator */}
+              <div className="flex gap-2">
+                {BENEFITS.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide ? 'bg-gold-600 w-6' : 'bg-gray-300'
+                    }`}
+                    aria-label={`Go to benefit ${index + 1}`}
+                  />
+                ))}
               </div>
 
-              {/* Content */}
-              <h3 className="text-xl font-heading font-semibold text-charcoal mb-3 group-hover:text-red-600 transition-colors duration-300">
-                {benefit.title}
-              </h3>
-              <p className="text-slate leading-relaxed">
-                {benefit.description}
-              </p>
-
-              {/* Decorative gradient line */}
-              <div className={`absolute bottom-0 left-0 right-0 h-1 ${benefit.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-            </motion.div>
-          ))}
-        </motion.div>
+              <button
+                onClick={nextSlide}
+                className="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+                aria-label="Next benefit"
+              >
+                <ChevronRight className="w-5 h-5 text-charcoal" />
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Key Highlights Section */}
         <motion.div

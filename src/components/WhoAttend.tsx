@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Briefcase, Rocket, TrendingUp, Building2, GraduationCap, Users2 } from 'lucide-react'
+import { Briefcase, Rocket, TrendingUp, Building2, GraduationCap, Users2, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useState, useRef } from 'react'
 
 const ATTENDEE_PROFILES = [
   {
@@ -86,10 +87,24 @@ const scaleIn = {
 
 export default function WhoAttend() {
   const prefersReducedMotion = useReducedMotion()
-  
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
+
   const containerVariants = prefersReducedMotion ? { hidden: {}, visible: {} } : staggerContainer
   const fadeVariants = prefersReducedMotion ? { hidden: {}, visible: {} } : fadeInUp
   const scaleVariants = prefersReducedMotion ? { hidden: {}, visible: {} } : scaleIn
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % ATTENDEE_PROFILES.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + ATTENDEE_PROFILES.length) % ATTENDEE_PROFILES.length)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index)
+  }
 
   return (
     <section id="who-attend" className="relative py-24 lg:py-32 bg-white">
@@ -125,59 +140,160 @@ export default function WhoAttend() {
 
        
 
-        {/* Attendee Profiles Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {ATTENDEE_PROFILES.map((profile, index) => (
-            <motion.div
-              key={index}
-              variants={fadeVariants}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-light/30 relative overflow-hidden"
-            >
-              {/* Decorative gradient background */}
-              <div className={`absolute top-0 right-0 w-32 h-32 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} opacity-5 rounded-bl-full transition-opacity duration-300 group-hover:opacity-10`} />
-              
-              {/* Icon */}
-              <div className="relative z-10 mb-6">
-                <div className={`inline-flex p-4 rounded-2xl ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <profile.icon className="w-7 h-7 text-white" />
+        {/* Attendee Profiles - Desktop Grid / Mobile Carousel */}
+        <div>
+          {/* Desktop Grid */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={containerVariants}
+            className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {ATTENDEE_PROFILES.map((profile, index) => (
+              <motion.div
+                key={index}
+                variants={fadeVariants}
+                whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                className="group bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-light/30 relative overflow-hidden"
+              >
+                {/* Decorative gradient background */}
+                <div className={`absolute top-0 right-0 w-32 h-32 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} opacity-5 rounded-bl-full transition-opacity duration-300 group-hover:opacity-10`} />
+                
+                {/* Icon */}
+                <div className="relative z-10 mb-6">
+                  <div className={`inline-flex p-4 rounded-2xl ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <profile.icon className="w-7 h-7 text-white" />
+                  </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="relative z-10">
-                <h3 className="text-xl font-heading font-bold text-charcoal mb-4 group-hover:text-red-600 transition-colors duration-300">
-                  {profile.title}
-                </h3>
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-xl font-heading font-bold text-charcoal mb-4 group-hover:text-red-600 transition-colors duration-300">
+                    {profile.title}
+                  </h3>
 
-                {/* Roles */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {profile.roles.map((role, idx) => (
-                    <span
-                      key={idx}
-                      className={`inline-block px-3 py-1 ${profile.accent} rounded-full text-xs font-semibold`}
+                  {/* Roles */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {profile.roles.map((role, idx) => (
+                      <span
+                        key={idx}
+                        className={`inline-block px-3 py-1 ${profile.accent} rounded-full text-xs font-semibold`}
+                      >
+                        {role}
+                      </span>
+                    ))}
+                  </div>
+
+                  <p className="text-slate text-sm leading-relaxed">
+                    {profile.description}
+                  </p>
+                </div>
+
+                {/* Bottom accent line */}
+                <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden relative">
+            <div className="overflow-hidden rounded-2xl">
+              <motion.div
+                ref={carouselRef}
+                className="flex"
+                animate={{ x: `-${currentSlide * 100}%` }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                {ATTENDEE_PROFILES.map((profile, index) => (
+                  <div key={index} className="w-full flex-shrink-0 px-2">
+                    <motion.div
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeVariants}
+                      className="group bg-gradient-to-br from-white to-gray-50 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-light/30 relative overflow-hidden"
                     >
-                      {role}
-                    </span>
-                  ))}
-                </div>
+                      {/* Decorative gradient background */}
+                      <div className={`absolute top-0 right-0 w-24 h-24 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} opacity-5 rounded-bl-full transition-opacity duration-300 group-hover:opacity-10`} />
+                      
+                      {/* Icon */}
+                      <div className="relative z-10 mb-4">
+                        <div className={`inline-flex p-3 rounded-2xl ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          <profile.icon className="w-6 h-6 text-white" />
+                        </div>
+                      </div>
 
-                <p className="text-slate text-sm leading-relaxed">
-                  {profile.description}
-                </p>
+                      {/* Content */}
+                      <div className="relative z-10">
+                        <h3 className="text-lg font-heading font-bold text-charcoal mb-3 group-hover:text-red-600 transition-colors duration-300">
+                          {profile.title}
+                        </h3>
+
+                        {/* Roles */}
+                        <div className="flex flex-wrap gap-1 mb-3">
+                          {profile.roles.slice(0, 2).map((role, idx) => (
+                            <span
+                              key={idx}
+                              className={`inline-block px-2 py-1 ${profile.accent} rounded-full text-xs font-semibold`}
+                            >
+                              {role}
+                            </span>
+                          ))}
+                          {profile.roles.length > 2 && (
+                            <span className="text-xs text-slate font-medium">
+                              +{profile.roles.length - 2} more
+                            </span>
+                          )}
+                        </div>
+
+                        <p className="text-slate text-sm leading-relaxed">
+                          {profile.description}
+                        </p>
+                      </div>
+
+                      {/* Bottom accent line */}
+                      <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                    </motion.div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="flex items-center justify-between mt-6">
+              <button
+                onClick={prevSlide}
+                className="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+                aria-label="Previous profile"
+              >
+                <ChevronLeft className="w-5 h-5 text-charcoal" />
+              </button>
+
+              {/* Dots Indicator */}
+              <div className="flex gap-2">
+                {ATTENDEE_PROFILES.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide ? 'bg-gold-600 w-6' : 'bg-gray-300'
+                    }`}
+                    aria-label={`Go to profile ${index + 1}`}
+                  />
+                ))}
               </div>
 
-              {/* Bottom accent line */}
-              <div className={`absolute bottom-0 left-0 right-0 h-1.5 ${profile.gradient === 'gradient-red' ? 'bg-gradient-red' : 'bg-gradient-gold'} rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-            </motion.div>
-          ))}
-        </motion.div>
+              <button
+                onClick={nextSlide}
+                className="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-light/50"
+                aria-label="Next profile"
+              >
+                <ChevronRight className="w-5 h-5 text-charcoal" />
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Bottom CTA */}
         <motion.div

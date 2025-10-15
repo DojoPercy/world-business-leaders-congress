@@ -8,6 +8,7 @@ import DelegatePackages from '@/components/DelegatePackages'
 import CoHostedEvents from '@/components/CoHostedEvents'
 import Gallery from '@/components/Gallery'
 import Footer from '@/components/Footer'
+import BackToTop from '@/components/BackToTop'
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       <CoHostedEvents />
       <Gallery />
       <Footer />
+      <BackToTop />
       </main>
   )
 }

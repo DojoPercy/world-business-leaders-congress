@@ -8,6 +8,18 @@ import { siteConfig } from '@/config/site'
 import { mobileMenuVariants, menuItemVariants } from '@/lib/animations'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
+// Smooth scroll function
+const smoothScrollTo = (elementId: string) => {
+  const element = document.getElementById(elementId)
+  if (element) {
+    const offsetTop = element.offsetTop - 80 // Account for fixed nav height
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    })
+  }
+}
+
 interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
@@ -93,14 +105,16 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 const IconComponent = Icons[item.icon as keyof typeof Icons] as Icons.LucideIcon
                 return (
                   <motion.li key={item.id} variants={itemVariants}>
-                    <a
-                      href={item.href}
-                      onClick={onClose}
+                    <button
+                      onClick={() => {
+                        smoothScrollTo(item.href.replace('#', ''))
+                        onClose()
+                      }}
                       className="flex items-center justify-center gap-3 text-2xl font-heading font-medium text-white/80 hover:text-gold-400 transition-colors duration-200 py-2"
                     >
                       {IconComponent && <IconComponent className="w-6 h-6" />}
                       {item.label}
-                    </a>
+                    </button>
                   </motion.li>
                 )
               })}

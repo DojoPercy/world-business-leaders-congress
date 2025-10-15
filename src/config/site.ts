@@ -10,12 +10,12 @@ export const siteConfig = {
   navigation: [
     { id: 'home', label: 'Home', href: '#home', icon: 'Home' },
     { id: 'about', label: 'About Congress', href: '#about', icon: 'Users' },
+    { id: 'why-attend', label: 'Why Attend', href: '#why-attend', icon: 'Target' },
+    { id: 'who-attend', label: 'Who Should Attend', href: '#who-attend', icon: 'Users' },
     { id: 'agenda', label: 'Congress Agenda', href: '#agenda', icon: 'Calendar' },
     { id: 'packages', label: 'Delegate Packages', href: '#packages', icon: 'Package' },
-    { id: 'speakers', label: 'Speakers', href: '#speakers', icon: 'Mic' },
     { id: 'events', label: 'Co-hosted Events', href: '#events', icon: 'CalendarDays' },
-    { id: 'awards', label: 'Awards', href: '#awards', icon: 'Award' },
-    { id: 'contact', label: 'Contact Us', href: '#contact', icon: 'Mail' },
+    { id: 'gallery', label: 'Gallery', href: '#gallery', icon: 'Image' },
   ],
   cta: {
     primary: {

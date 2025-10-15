@@ -8,6 +8,18 @@ import { siteConfig } from '@/config/site'
 import MobileMenu from './MobileMenu'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
+// Smooth scroll function
+const smoothScrollTo = (elementId: string) => {
+  const element = document.getElementById(elementId)
+  if (element) {
+    const offsetTop = element.offsetTop - 80 // Account for fixed nav height
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
+    })
+  }
+}
+
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -52,7 +64,7 @@ export default function Navigation() {
               style={prefersReducedMotion ? {} : { scale: logoScale }}
               className="flex-shrink-0"
             >
-              <a href="#home" className="block" aria-label="World Business Leaders Congress Home">
+              <button onClick={() => smoothScrollTo('home')} className="block" aria-label="World Business Leaders Congress Home">
                 <Image
                   src="/logos/logo-dark.png"
                   alt="World Business Leaders Congress"
@@ -61,20 +73,20 @@ export default function Navigation() {
                   className="h-12 w-auto transition-all duration-300"
                   priority
                 />
-              </a>
+              </button>
             </motion.div>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-8">
-              {siteConfig.navigation.slice(0, -1).map((item) => (
-                <a
+              {siteConfig.navigation.map((item) => (
+                <button
                   key={item.id}
-                  href={item.href}
+                  onClick={() => smoothScrollTo(item.href.replace('#', ''))}
                   className="text-charcoal hover:text-red-400 font-body font-medium text-sm transition-colors duration-200 relative group"
                 >
                   {item.label}
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300" />
-                </a>
+                </button>
               ))}
               
               {/* CTA Button */}

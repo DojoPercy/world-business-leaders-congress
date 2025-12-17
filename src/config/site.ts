@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: 'WBLC 2025',
   description: 'Business Beyond Profit: Shaping a Sustainable and Equitable Future',
   event: {
-    date: '15th-19th December 2025',
+    date: '30th - 2nd march, 2026',
     location: 'Dubai, UAE',
     theme: 'Business Beyond Profit: Shaping a Sustainable and Equitable Future'
   },

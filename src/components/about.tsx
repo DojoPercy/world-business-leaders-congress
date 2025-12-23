@@ -39,7 +39,7 @@ export default function AboutSection() {
 
           <p className="text-lg text-gray-700 leading-relaxed max-w-xl">
             Held in <span className="font-semibold">Dubai, UAE</span>, from{' '}
-            <span className="font-semibold">15th – 19th December 2025</span>,
+            <span className="font-semibold">30th march - 2nd April, 2026</span>,
             the Congress is a premier platform where thought leadership meets
             transformative innovation — inspiring organizations to move beyond
             profit and shape a sustainable future.
@@ -55,7 +55,7 @@ export default function AboutSection() {
             <div className="w-1 h-10 bg-red-600 rounded-full" />
             <span className="text-gray-800 font-medium italic leading-snug">
               “Leaders and executives from multiple continents participated in
-              the 2024 edition.”
+              the 2025 edition.”
             </span>
           </motion.div>
         </motion.div>

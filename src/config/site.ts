@@ -4,7 +4,7 @@ export const siteConfig = {
   description: 'Business Beyond Profit: Shaping a Sustainable and Equitable Future',
   event: {
     date: '30th march - 2nd April, 2026',
-    location: 'Dubai, UAE',
+    location: 'Dubagvggvi, UAE',
     theme: 'Business Beyond Profit: Shaping a Sustainable and Equitable Future'
   },
   navigation: [
